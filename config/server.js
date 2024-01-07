@@ -19,7 +19,6 @@ app.get("/", (req, res) => {
 app.post('/generate-images', async (req, res) => {
     try {
         const { prompt, n } = req.body;
-        // console.log("/////////////////" + JSON.stringify(req, null, 2));
 
         if (!prompt || !n || isNaN(n)) {
             return res.status(400).json({ error: 'Prompt and a valid number of images are required' });
