@@ -76,7 +76,7 @@ export const ImageGenerator = () => {
         try {
             await generateAiImages();
         } catch (error) {
-            console.error(error);
+            //console.error(error);
         }
     };
 
