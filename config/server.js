@@ -21,7 +21,7 @@ app.post('/generate-images', async (req, res) => {
         const { prompt, n } = req.body;
 
         if (!prompt || !n || isNaN(n)) {
-            return res.status(400).json({ error: 'Prompt and a valid number of images are required' });
+            return res.status(400).json({ error: 'please check your input. Prompt is required' });
         }
 
         const response = await axios.post(

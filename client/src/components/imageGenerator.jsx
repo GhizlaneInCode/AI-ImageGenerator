@@ -6,7 +6,6 @@ import axios from 'axios';
 
 
 export const ImageGenerator = () => {
-    const [message, setMessage] = useState('Seems somethig wrong with the Server, try again later ');
     const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
     const [isImageGenerating, setIsImageGenerating] = useState(false);
     const [userPrompt, setUserPrompt] = useState('');
@@ -43,25 +42,34 @@ export const ImageGenerator = () => {
             updateImageCard([...data]);
 
         } catch (error) {
-            if (error.response && error.response.status === 400) {
-                setMessage('Bad request. Please check your input');
-            } else if (error.response && error.response.status === 500) {
-                setMessage('Internal server error');
-            }
 
-            toast.error('😨 Oops !! ' + message, {
-                position: "top-right",
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
-            });
+            if (error.response && error.response.status === 400) {
+                showToast(error.response.data.error);
+
+
+            } else if (error.response && error.response.status === 500) {
+                showToast(error.response.data.error);
+
+            } else
+                showToast("Seems somethig wrong with the Server, try again later");
+
+
         } finally {
             setIsImageGenerating(false);
         }
+    };
+
+    const showToast = (message) => {
+        toast.error('😨 Oops !! ' + message, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+        });
     };
 
     const handleImageGeneration = async (e) => {
